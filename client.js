@@ -1,7 +1,3 @@
-// var crypto = require('crypto');
-// var name = 'I love Node.js';
-// var hash = crypto.createHash('md5').update(name).digest("hex");
-// console.log(hash);
 'use strict';
 
 var thrift = require('thrift');
@@ -20,7 +16,6 @@ var Client = function(options) {
   }
   this.host = options.host || 'master';
   this.port = options.port || '9090';
-  this.HBaseTypes = HBaseTypes;
   this.connection = thrift.createConnection(this.host, this.port, {
     transport: thrift.TBufferedTransport,
     protocol: thrift.TBinaryProtocol
@@ -28,7 +23,27 @@ var Client = function(options) {
 }
 
 Client.create = function(options) {
-  return new Client(options)
+  var client = new Client(options);
+  client.initClient();
+  return client;
+}
+
+Client.prototype.initClient = function() {
+  that.connection.on('data', function(err, data) {
+    if (err) { console.log('data error', err); }
+  });
+
+  that.connection.on('error', function(err) {
+    if (err) { console.log('error', err) }
+    if (callback === undefined) {
+    } else {
+      callback(true, err);
+    }
+  });
+
+  that.connection.on('close', function() {
+    console.log('close');
+  });
 }
 
 Client.prototype.getClient = function(callback) {
@@ -55,22 +70,6 @@ Client.prototype.getClient = function(callback) {
       callback(true, client);
     });
   }
-
-  that.connection.on('data', function(err, data) {
-    if (err) { console.log('data error', err); }
-  });
-
-  that.connection.on('error', function(err) {
-    if (err) { console.log('error', err) }
-    if (callback === undefined) {
-    } else {
-      callback(true, err);
-    }
-  });
-
-  that.connection.on('close', function() {
-    console.log('close');
-  });
 }
 
 Client.prototype.Get = function() { return new Get(row); }

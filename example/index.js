@@ -1,4 +1,4 @@
-var HBase = require('../');
+var HBase = require('../index');
 
 var config = {
   host: 'qihe2081',
@@ -7,11 +7,20 @@ var config = {
 
 var hbase = HBase.client(config);
 
-/* rows */
-hbase.getClient()
-  .then(function(err, client) {
+hbase.getClient(function(err, client) {
+  console.log(client);
+});
 
-  })
+var client = hbase.getClient();
+// client.then(function() {
+//   console.log('error');
+// });
+
+console.log('client', client);
+//
+// client.then(function(err, client) {
+//
+// });
 
 // get.add('webdata');
 //

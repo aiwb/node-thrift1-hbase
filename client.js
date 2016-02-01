@@ -20,7 +20,7 @@ var Client = function(options) {
   }
   this.host = options.host || 'master';
   this.port = options.port || '9090';
-
+  this.HBaseTypes = HBaseTypes;
   this.connection = thrift.createConnection(this.host, this.port, {
     transport: thrift.TBufferedTransport,
     protocol: thrift.TBinaryProtocol
@@ -35,21 +35,24 @@ Client.prototype.getClient = function(callback) {
   var that = this;
 
   if (callback === undefined) {
-    that.connectin.on('connect', function() {
-      var _defer = Q.defer();
+    var _defer = Q.defer();
+    that.connection.on('connect', function() {
       var client = thrift.createClient(HBase, that.connection);
       console.log('connected');
+      console.log(client);
       if (client !== null && client !== undefined) {
-        _defer.resolve(true, client);
+        _defer.resolve(client);
       } else {
-        _defer.reject('error', client);
+        _defer.reject(client);
       }
-      return _defer.promise;
     });
+    return _defer.promise;
   } else {
-    that.connectin.on('connect', function() {
+    that.connection.on('connect', function(err) {
       var client = thrift.createClient(HBase, that.connection);
-      callback(true, err);
+      console.log('connected');
+      console.log(client);
+      callback(true, client);
     });
   }
 
@@ -59,7 +62,10 @@ Client.prototype.getClient = function(callback) {
 
   that.connection.on('error', function(err) {
     if (err) { console.log('error', err) }
-    callback(true, err);
+    if (callback === undefined) {
+    } else {
+      callback(true, err);
+    }
   });
 
   that.connection.on('close', function() {
@@ -113,8 +119,6 @@ Client.prototype.get = function(table, param, callback) {
   } else {
     columnType = 2;
   }
-
-
 
   that.getClient(function(err, client) {
     if (err) {

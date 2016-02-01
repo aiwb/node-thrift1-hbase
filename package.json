@@ -1,6 +1,6 @@
 {
   "name": "node-thrift1-hbase",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "node-thrift1-hbase",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "wuwenbin",
   "license": "MIT",
   "dependencies": {
+    "q": "^1.4.1",
     "thrift": "^0.9.3"
   }
 }

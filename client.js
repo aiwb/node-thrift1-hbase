@@ -5,8 +5,8 @@
 'use strict';
 
 var thrift = require('thrift'),
-  HBase = require('../../gen-nodejs/Hbase.js'),
-  HBaseTypes = require('../../gen-nodejs/Hbase_types.js');
+  HBase = require('./gen-nodejs/Hbase.js'),
+  HBaseTypes = require('./gen-nodejs/Hbase_types.js');
 
 var Get = require('./get'),
   Put = require('./put'),
@@ -34,21 +34,34 @@ Client.create = function(options) {
 Client.prototype.getClient = function(callback) {
   var that = this;
 
-  this.connectin.on('connect', function() {
-    var client = thrift.createClient(HBase, that.connection);
-    callback(true, err);
-  });
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    that.connectin.on('connect', function() {
+      var client = thrift.createClient(HBase, that.connection);
+      if (client !== null && client !== undefined) {
+        _defer.resolve(true, client);
+      } else {
+        _defer.reject('error', client);
+      }
+      return _defer.promise;
+    });
+  } else {
+    that.connectin.on('connect', function() {
+      var client = thrift.createClient(HBase, that.connection);
+      callback(true, err);
+    });
+  }
 
-  connection.on('data', function(err, data) {
+  that.connection.on('data', function(err, data) {
     if (err) { console.log('data error', err); }
   });
 
-  this.connection.on('error', function(err) {
+  that.connection.on('error', function(err) {
     if (err) { console.log('error', err) }
     callback(true, err);
   });
 
-  this.connection.on('close', function() {
+  that.connection.on('close', function() {
     console.log('close');
   });
 }

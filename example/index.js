@@ -8,14 +8,10 @@ var config = {
 var hbase = HBase.client(config);
 
 /* rows */
-var get = hbase.getClient(function(err, client) {
-  if (err) {
-    callback(null);
-    return;
-  }
-  // thrift 方法
-  // client.xxxxx
-});
+hbase.getClient()
+  .then(function(err, client) {
+
+  })
 
 // get.add('webdata');
 //

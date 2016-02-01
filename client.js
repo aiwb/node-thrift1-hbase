@@ -29,6 +29,7 @@ Client.create = function(options) {
 }
 
 Client.prototype.initClient = function() {
+  var that = this;
   that.connection.on('data', function(err, data) {
     if (err) { console.log('data error', err); }
   });

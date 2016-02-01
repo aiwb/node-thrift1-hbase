@@ -1,6 +1,6 @@
 {
   "name": "node-thrift1-hbase",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "node-thrift1-hbase",
   "main": "index.js",
   "scripts": {

@@ -5,6 +5,8 @@
 'use strict';
 
 var thrift = require('thrift'),
+  Thrift = thrift.Thrift;
+  Q = thrift.Q,
   HBase = require('./gen-nodejs/Hbase.js'),
   HBaseTypes = require('./gen-nodejs/Hbase_types.js');
 
@@ -38,6 +40,7 @@ Client.prototype.getClient = function(callback) {
     var _defer = Q.defer();
     that.connectin.on('connect', function() {
       var client = thrift.createClient(HBase, that.connection);
+      console.log('connected');
       if (client !== null && client !== undefined) {
         _defer.resolve(true, client);
       } else {

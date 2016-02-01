@@ -3,3 +3,4 @@ bk.js
 gen-nodejs/Hbase_types2.js
 gen-nodejs/Hbase2.js
 node_modules
+.DS_Store

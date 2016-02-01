@@ -17,7 +17,6 @@ var Get = require('./get'),
 
 var Client = function(options) {
   if (!options.host || !options.port) {
-    callback(true, 'host or port is none');
   }
   this.host = options.host || 'master';
   this.port = options.port || '9090';

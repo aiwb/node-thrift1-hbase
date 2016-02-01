@@ -35,10 +35,6 @@ Client.prototype.initClient = function() {
 
   that.connection.on('error', function(err) {
     if (err) { console.log('error', err) }
-    if (callback === undefined) {
-    } else {
-      callback(true, err);
-    }
   });
 
   that.connection.on('close', function() {
@@ -53,8 +49,6 @@ Client.prototype.getClient = function(callback) {
     var _defer = Q.defer();
     that.connection.on('connect', function() {
       var client = thrift.createClient(HBase, that.connection);
-      console.log('connected');
-      console.log(client);
       if (client !== null && client !== undefined) {
         _defer.resolve(client);
       } else {
@@ -65,9 +59,7 @@ Client.prototype.getClient = function(callback) {
   } else {
     that.connection.on('connect', function(err) {
       var client = thrift.createClient(HBase, that.connection);
-      console.log('connected');
-      console.log(client);
-      callback(true, client);
+      callback(null, client);
     });
   }
 }

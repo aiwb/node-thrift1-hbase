@@ -1,7 +1,3 @@
-/**
- * Created by rubinus on 14-10-22.
- */
-
 "use strict";
 
 var Int64 = require('node-int64');
@@ -25,7 +21,5 @@ Put.prototype.add = function (family, qualifier, value, timestamp) {
     this.familyList.push(familyMap);
     return this;
 };
-
-
 
 module.exports = Put;

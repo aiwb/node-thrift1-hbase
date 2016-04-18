@@ -1,7 +1,7 @@
 var HBase = require('../index');
 
 var config = {
-  host: 'qihe2081',
+  host: 'xxx.xxx.xxx.xxx',
   prot: 9090
 };
 
@@ -12,6 +12,7 @@ hbase.getClient(function(err, client) {
 });
 
 var client = hbase.getClient();
+
 // client.then(function() {
 //   console.log('error');
 // });

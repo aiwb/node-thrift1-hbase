@@ -1,9 +1,4 @@
-/**
- * Created by rubinus on 14-10-22.
- */
-
 "use strict";
-
 
 function Del(row) {
     if (!(this instanceof Del)) {
@@ -49,7 +44,5 @@ Del.prototype.addTimestamp = function (family, qualifier, timestamp) {
     this.familyList.push(familyMap);
     return this;
 };
-
-
 
 module.exports = Del;

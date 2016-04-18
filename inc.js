@@ -1,7 +1,3 @@
-/**
- * Created by rubinus on 14-10-22.
- */
-
 "use strict";
 
 function Inc(row) {
@@ -19,7 +15,5 @@ Inc.prototype.add = function (family, qualifier) {
     this.familyList.push(familyMap);
     return this;
 };
-
-
 
 module.exports = Inc;
